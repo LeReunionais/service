@@ -11,7 +11,7 @@ import (
 type message struct {
 	Jsonrpc string `json:"jsonrpc"`
 	ID      string `json:"id"`
-	Command string `json:"command"`
+	Method 	string `json:"method"`
 	Params  params `json:"params"`
 }
 
@@ -59,7 +59,7 @@ func Register(endpoint string, service Service) {
 	registerMsg := message{
 		Jsonrpc: "2.0",
 		ID:      uuid.NewV4().String(),
-		Command: "register",
+		Method:  "register",
 		Params:  params{service},
 	}
 	registerMsgByt, errMar := json.Marshal(registerMsg)

@@ -12,12 +12,12 @@ func TestRegisterAllInterfaces(t *testing.T) {
 	// Socket to receive message
 	receiver, _ := zmq.NewSocket(zmq.PULL)
 	defer receiver.Close()
-	error := receiver.Bind("tcp://127.0.0.1:3001")
+	error := receiver.Bind("tcp://127.0.0.1:6001")
 	if error != nil {
 		t.Fatal(error)
 	}
 
-	endpoint := "tcp://127.0.0.1:3001"
+	endpoint := "tcp://127.0.0.1:6001"
 
 	cases := []struct {
 		nameIn     string
@@ -46,12 +46,12 @@ func TestRegister(t *testing.T) {
 	// Socket to receive message
 	receiver, _ := zmq.NewSocket(zmq.PULL)
 	defer receiver.Close()
-	error := receiver.Bind("tcp://127.0.0.1:3002")
+	error := receiver.Bind("tcp://127.0.0.1:6002")
 	if error != nil {
 		t.Fatal(error)
 	}
 
-	endpoint := "tcp://127.0.0.1:3002"
+	endpoint := "tcp://127.0.0.1:6002"
 
 	service := Service{
 		Name:     "youpi",
@@ -63,7 +63,7 @@ func TestRegister(t *testing.T) {
 		in   Service
 		want string
 	}{
-		{service, `{"jsonrpc":"2.0","id":".*","command":"register","params":{"service":{"name":"youpi","hostname":"localhost","protocol":"HTTP","port":80}}}`},
+		{service, `{"jsonrpc":"2.0","id":".*","method":"register","params":{"service":{"name":"youpi","hostname":"localhost","protocol":"HTTP","port":80}}}`},
 	}
 
 	for _, c := range cases {
