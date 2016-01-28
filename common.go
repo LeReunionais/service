@@ -7,7 +7,7 @@ type message struct {
 	Params  interface{} `json:"params"`
 }
 
-type params struct {
+type registerparams struct {
 	Service Service `json:"service"`
 }
 
