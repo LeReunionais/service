@@ -41,7 +41,7 @@ func Register(endpoint string, service Service) {
 		Jsonrpc: "2.0",
 		ID:      uuid.NewV4().String(),
 		Method:  "register",
-		Params:  params{service},
+		Params:  registerparams{service},
 	}
 	registerMsgByt, errMar := json.Marshal(registerMsg)
 	if errMar != nil {

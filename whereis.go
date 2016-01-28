@@ -26,7 +26,7 @@ func Whereis(endpoint, name string) Service {
 		Jsonrpc: "2.0",
 		ID:      uuid.NewV4().String(),
 		Method:  "find",
-		Params:  findparams{"article"},
+		Params:  findparams{name},
 	}
 	whereIsMsgByt, errMar := json.Marshal(whereIsMsg)
 	if errMar != nil {
