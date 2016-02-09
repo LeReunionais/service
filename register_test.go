@@ -8,40 +8,6 @@ import (
 	"testing"
 )
 
-func TestRegisterAllInterfaces(t *testing.T) {
-	// Socket to receive message
-	receiver, _ := zmq.NewSocket(zmq.PULL)
-	defer receiver.Close()
-	error := receiver.Bind("tcp://127.0.0.1:6001")
-	if error != nil {
-		t.Fatal(error)
-	}
-
-	endpoint := "tcp://127.0.0.1:6001"
-
-	cases := []struct {
-		nameIn     string
-		protocolIn string
-		portIn     int
-		want       string
-	}{
-		{"youpi", "HTTP", 80, `{"action":"register","service":{"name":"youpi","hostname":"localhost","protocol":"HTTP","port":80}}`},
-	}
-
-	for _, c := range cases {
-		registeredIps := RegisterAllInterfaces(endpoint, c.nameIn, c.protocolIn, c.portIn)
-		var registrations []string
-		for _ = range registeredIps {
-			got, _ := receiver.Recv(0)
-			fmt.Println("Received message", got)
-			registrations = append(registrations, got)
-		}
-		if len(registeredIps) != len(registrations) {
-			t.Errorf("Didn't receive expected number of registrations. Expected: %d, received: %d", len(registeredIps), len(registrations))
-		}
-	}
-}
-
 func TestRegister(t *testing.T) {
 	// Socket to receive message
 	receiver, _ := zmq.NewSocket(zmq.PULL)
