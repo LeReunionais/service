@@ -4,7 +4,6 @@ import (
   zmq "github.com/pebbe/zmq4"
   "log"
   "testing"
-  "time"
 )
 
 func TestListen(t *testing.T) {
@@ -24,7 +23,7 @@ func TestListen(t *testing.T) {
   log.Println("publisher bound to", endpoint)
 
   service := Service{ "name", "localhost", "REP", 7000 }
-  go Listen("tcp://127.0.0.1:7000", service)
+  go Listen(endpoint, endpoint, service)
   publisher.Send("youpi", 0)
   log.Println("send")
 }

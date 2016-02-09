@@ -6,7 +6,7 @@ import (
 )
 
 // Listen will listen to all publication for registration from registry
-func Listen(endpoint string, service Service) {
+func Listen(register, listen string, service Service) {
   subscriber, errSock := zmq.NewSocket(zmq.SUB)
   defer subscriber.Close()
   if errSock != nil {
@@ -14,11 +14,11 @@ func Listen(endpoint string, service Service) {
   }
   log.Println("subscriber created")
 
-  errConn := subscriber.Connect(endpoint)
+  errConn := subscriber.Connect(listen)
   if errConn != nil {
     log.Fatal(errConn)
   }
-  log.Println("subscriber connected to", endpoint)
+  log.Println("subscriber connected to", listen)
 
   errSub := subscriber.SetSubscribe("")
   if errSub != nil {
@@ -34,6 +34,6 @@ func Listen(endpoint string, service Service) {
     if errRecv != nil {
       log.Fatal(errRecv)
     }
-    Register(endpoint, service)
+    Register(register, service)
   }
 }
