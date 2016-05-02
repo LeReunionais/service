@@ -22,12 +22,13 @@ func Whereis(endpoint, name string) Service {
 	}
 	log.Println("requester connected")
 
-	whereIsMsg := message{
-		Jsonrpc: "2.0",
-		ID:      uuid.NewV4().String(),
-		Method:  "find",
-		Params:  findparams{name},
+	whereIsMsg := whereis_request{
+		Jsonrpc:     "2.0",
+		ID:          uuid.NewV4().String(),
+		Method:      "find",
+		ServiceName: name,
 	}
+
 	whereIsMsgByt, errMar := json.Marshal(whereIsMsg)
 	if errMar != nil {
 		log.Fatal(whereIsMsgByt)
@@ -41,7 +42,7 @@ func Whereis(endpoint, name string) Service {
 		log.Fatal(errRec)
 	}
 
-	replyMsg := findreply{}
+	var replyMsg whereis_reply
 	errJSON := json.Unmarshal([]byte(reply), &replyMsg)
 	if errJSON != nil {
 		log.Fatal(errJSON)

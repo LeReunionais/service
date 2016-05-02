@@ -21,7 +21,7 @@ func Register(endpoint string, service Service) {
 	}
 	log.Println("pusher connected to", endpoint)
 
-	registerMsg := message{
+	registerMsg := register_request{
 		Jsonrpc: "2.0",
 		ID:      uuid.NewV4().String(),
 		Method:  "register",
